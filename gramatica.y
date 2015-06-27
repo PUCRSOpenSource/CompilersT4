@@ -62,23 +62,18 @@ statementList : statement ';' statementList
               ;
 
 statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
-  						   System.out.println("\tMOVL %EDX, _"+$1);
-					     }
-          | WHILE {
-					pRot.push(proxRot);  proxRot += 2;
-					System.out.printf("rot_%02d:\n",pRot.peek());
-				  } 
-			  exp  {
-			 							System.out.println("\tPOPL %EAX   # desvia se falso...");
-											System.out.println("\tCMPL $0, %EAX");
-											System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1);
-										} 
-				DO statement		{
-				  		System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
-							System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
-							pRot.pop();
-							} 
-		  | FACA  statement		{
+                             System.out.println("\tMOVL %EDX, _"+$1); }
+
+          | WHILE { pRot.push(proxRot);  proxRot += 2;
+                    System.out.printf("rot_%02d:\n",pRot.peek()); } 
+	    exp  { System.out.println("\tPOPL %EAX   # desvia se falso...");
+	           System.out.println("\tCMPL $0, %EAX");
+	           System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1); } 
+	    DO statement { System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
+	                   System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
+	                   pRot.pop(); } 
+
+	  | FACA  statement		{
 				  		System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
 							System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
 							pRot.pop();
