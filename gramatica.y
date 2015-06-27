@@ -6,7 +6,7 @@
 
 %token  PROGRAM FUNCTION PROCEDURE
 %token VAR INTEGER BOOLEAN REAL 
-%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN 
+%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO SE SENAO
 %token ASSIGN DIV MOD AND OR NOT
 %token TRUE FALSE
 %token LEQ LE GRE GEQ EQ NEQ
@@ -64,8 +64,6 @@ statementList : statement ';' statementList
 statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
   						   System.out.println("\tMOVL %EDX, _"+$1);
 					     }
-          | IF exp THEN statement
-          | IF exp THEN statement ELSE statement
           | WHILE {
 					pRot.push(proxRot);  proxRot += 2;
 					System.out.printf("rot_%02d:\n",pRot.peek());
@@ -79,7 +77,21 @@ statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
 				  		System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
 							System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
 							pRot.pop();
-							}  
+							} 
+		  | FACA  statement		{
+				  		System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
+							System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
+							pRot.pop();
+							} 
+			ENQUANTO {
+					pRot.push(proxRot);  proxRot += 2;
+					System.out.printf("rot_%02d:\n",pRot.peek());
+				  } 
+			  exp  {
+			 							System.out.println("\tPOPL %EAX   # desvia se falso...");
+											System.out.println("\tCMPL $0, %EAX");
+											System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1);
+										} 
           | compoundStmt
           | READLN '(' ID ')' 
 									{
@@ -112,7 +124,57 @@ statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
 			 System.out.println("\tCALL _write");	
 			 System.out.println("\tCALL _writeln"); 
             }
-          |
+          | IF  exp THEN {	
+											pRot.push(proxRot);  proxRot += 2;
+															
+											System.out.println("\tPOPL %EAX");
+											System.out.println("\tCMPL $0, %EAX");
+											System.out.printf("\tJE rot_%02d\n", pRot.peek());
+										}
+								 statement 
+
+             restoIf {
+											System.out.printf("rot_%02d:\n",pRot.peek()+1);
+											pRot.pop();
+										}
+		|  exp SE {	
+											pRot.push(proxRot);  proxRot += 2;
+															
+											System.out.println("\tPOPL %EAX");
+											System.out.println("\tCMPL $0, %EAX");
+											System.out.printf("\tJE rot_%02d\n", pRot.peek());
+										}
+								 statement 
+
+             restoSe {
+											System.out.printf("rot_%02d:\n",pRot.peek()+1);
+											pRot.pop();											
+										}
+							
+		|								
+     ;
+     
+     
+restoIf : ELSE  {
+											System.out.printf("\tJMP rot_%02d\n", pRot.peek()+1);
+											System.out.printf("rot_%02d:\n",pRot.peek());
+								
+										} 							
+							statement  
+							
+							
+		| {
+		    System.out.printf("\tJMP rot_%02d\n", pRot.peek()+1);
+				System.out.printf("rot_%02d:\n",pRot.peek());
+				} 
+		;	
+		
+restoSe : SENAO  {
+											System.out.printf("\tJMP rot_%02d\n", pRot.peek()+1);
+											System.out.printf("rot_%02d:\n",pRot.peek());
+								
+										} 							
+							statement  
           ;
 
 printList : LITERAL printList2
