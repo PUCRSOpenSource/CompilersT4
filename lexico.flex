@@ -37,7 +37,7 @@ NUM         = [0-9]+
 "VAR"       {return Parser.VAR;}      
 "INTEGER"   {return Parser.INTEGER;}
 "BOOLEAN"   {return Parser.BOOLEAN;}   
-
+"BREAK"     {return Parser.BREAK;}
 "BEGIN"     {return Parser.BEGIN;}
 "END"       {return Parser.END;}
 "IF"        {return Parser.IF;}

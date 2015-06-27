@@ -6,7 +6,7 @@
 
 %token  PROGRAM FUNCTION PROCEDURE
 %token VAR INTEGER BOOLEAN REAL 
-%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO SE SENAO
+%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO SE SENAO BREAK
 %token ASSIGN DIV MOD AND OR NOT
 %token TRUE FALSE
 %token LEQ LE GRE GEQ EQ NEQ
@@ -221,6 +221,7 @@ exp :  		   NUM  { System.out.println("\tPUSHL $"+$1); }
   private ArrayList<String> strTab = new ArrayList<String>();
 
   private Stack<Integer> pRot = new Stack<Integer>();
+  private Stack<Integer> whileRot = new Stack<Integer>();
   private int proxRot = 1;
 
 
