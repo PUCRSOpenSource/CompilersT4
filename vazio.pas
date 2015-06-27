@@ -1,0 +1,3 @@
+program vazio;
+begin
+end.
