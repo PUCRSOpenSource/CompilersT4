@@ -64,90 +64,63 @@ statementList : statement ';' statementList
 statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
                              System.out.println("\tMOVL %EDX, _"+$1); }
 
-          | WHILE { pRot.push(proxRot);  proxRot += 2;
+          | WHILE { pRot.push(proxRot); whileRot.push(proxRot);  proxRot += 2;
                     System.out.printf("rot_%02d:\n",pRot.peek()); } 
 	    exp  { System.out.println("\tPOPL %EAX   # desvia se falso...");
 	           System.out.println("\tCMPL $0, %EAX");
 	           System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1); } 
 	    DO statement { System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
 	                   System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
-	                   pRot.pop(); } 
+	                   pRot.pop(); whileRot.pop(); } 
 
-	  | FACA  statement		{
-				  		System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
-							System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
-							pRot.pop();
-							} 
-			ENQUANTO {
-					pRot.push(proxRot);  proxRot += 2;
-					System.out.printf("rot_%02d:\n",pRot.peek());
-				  } 
-			  exp  {
-			 							System.out.println("\tPOPL %EAX   # desvia se falso...");
-											System.out.println("\tCMPL $0, %EAX");
-											System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1);
-										} 
+	  | FACA  statement { System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
+                              System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
+                              pRot.pop(); } 
+            ENQUANTO { pRot.push(proxRot);  proxRot += 2;
+                       System.out.printf("rot_%02d:\n",pRot.peek()); } 
+	    exp  { System.out.println("\tPOPL %EAX   # desvia se falso...");
+	           System.out.println("\tCMPL $0, %EAX");
+	           System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1); } 
+
           | compoundStmt
-          | READLN '(' ID ')' 
-									{
-									System.out.println("\tPUSHL $_"+$3);
-									System.out.println("\tCALL _read");
-									System.out.println("\tPOPL %EDX");
-									System.out.println("\tMOVL %EAX, (%EDX)");
-									}
-									
+
+          | READLN '(' ID ')' { System.out.println("\tPUSHL $_"+$3);
+                                System.out.println("\tCALL _read");
+	                        System.out.println("\tPOPL %EDX");
+	                        System.out.println("\tMOVL %EAX, (%EDX)"); }
 
           | WRITELN '(' LITERAL ')' { strTab.add($3);
-                                System.out.println("\tMOVL $_str_"+strCount+"Len, %EDX"); 
-				System.out.println("\tMOVL $_str_"+strCount+", %ECX"); 
-                                System.out.println("\tCALL _writeLit"); 
-				System.out.println("\tCALL _writeln"); 
-                                strCount++;
-				}
+                                      System.out.println("\tMOVL $_str_"+strCount+"Len, %EDX"); 
+                                      System.out.println("\tMOVL $_str_"+strCount+", %ECX"); 
+                                      System.out.println("\tCALL _writeLit"); 
+                                      System.out.println("\tCALL _writeln"); 
+                                      strCount++; }
       
-	  		| WRITELN '(' LITERAL 
-                              { strTab.add($3);
-                                System.out.println("\tMOVL $_str_"+strCount+"Len, %EDX"); 
-				System.out.println("\tMOVL $_str_"+strCount+", %ECX"); 
-                                System.out.println("\tCALL _writeLit"); 
-				strCount++;
-				}
+	  | WRITELN '(' LITERAL { strTab.add($3);
+                                  System.out.println("\tMOVL $_str_"+strCount+"Len, %EDX"); 
+                                  System.out.println("\tMOVL $_str_"+strCount+", %ECX"); 
+                                  System.out.println("\tCALL _writeLit"); 
+	                          strCount++; }
+            ',' exp ')' { System.out.println("\tPOPL %EAX"); 
+                          System.out.println("\tCALL _write");	
+                          System.out.println("\tCALL _writeln"); }
 
-                    ',' exp ')'
-			{ 
-			 System.out.println("\tPOPL %EAX"); 
-			 System.out.println("\tCALL _write");	
-			 System.out.println("\tCALL _writeln"); 
-            }
-          | IF  exp THEN {	
-											pRot.push(proxRot);  proxRot += 2;
-															
-											System.out.println("\tPOPL %EAX");
-											System.out.println("\tCMPL $0, %EAX");
-											System.out.printf("\tJE rot_%02d\n", pRot.peek());
-										}
-								 statement 
+          | IF  exp THEN { pRot.push(proxRot);  proxRot += 2;
+                           System.out.println("\tPOPL %EAX");
+	                   System.out.println("\tCMPL $0, %EAX");
+	                   System.out.printf("\tJE rot_%02d\n", pRot.peek()); }
+	    statement restoIf { System.out.printf("rot_%02d:\n",pRot.peek()+1);
+	                        pRot.pop(); }
 
-             restoIf {
-											System.out.printf("rot_%02d:\n",pRot.peek()+1);
-											pRot.pop();
-										}
-		|  exp SE {	
-											pRot.push(proxRot);  proxRot += 2;
-															
-											System.out.println("\tPOPL %EAX");
-											System.out.println("\tCMPL $0, %EAX");
-											System.out.printf("\tJE rot_%02d\n", pRot.peek());
-										}
-								 statement 
-
-             restoSe {
-											System.out.printf("rot_%02d:\n",pRot.peek()+1);
-											pRot.pop();											
-										}
+	  |  exp SE { pRot.push(proxRot);  proxRot += 2;
+	              System.out.println("\tPOPL %EAX");
+	              System.out.println("\tCMPL $0, %EAX");
+	              System.out.printf("\tJE rot_%02d\n", pRot.peek()); }
+	    statement restoSe { System.out.printf("rot_%02d:\n",pRot.peek()+1);
+	                        pRot.pop(); }
 							
-		|								
-     ;
+	  |
+          ;
      
      
 restoIf : ELSE  {
