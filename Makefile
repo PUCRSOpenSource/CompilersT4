@@ -20,7 +20,7 @@ run: Parser.class
 build: clean Parser.class
 
 clean:
-	rm -f *~ *.class Yylex.java Parser.java y.output *.s *.o breiku contaAte90 fat vazio soma
+	rm -f *~ *.class Yylex.java Parser.java y.output *.s *.o breiku contaAte90 fat vazio soma doWhile pulaOCinco
 
 Parser.class: TS_entry.java TabSimb.java Yylex.java Parser.java
 	$(JAVAC) Parser.java
