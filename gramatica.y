@@ -6,7 +6,7 @@
 
 %token  PROGRAM FUNCTION PROCEDURE
 %token VAR INTEGER BOOLEAN REAL 
-%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO SE SENAO BREAK
+%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO SE SENAO BREAK CONTINUE
 %token ASSIGN DIV MOD AND OR NOT
 %token TRUE FALSE
 %token LEQ LE GRE GEQ EQ NEQ
@@ -74,6 +74,8 @@ statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
 	                   pRot.pop(); whileRot.pop(); } 
 
           | BREAK { System.out.printf("\tJMP rot_%02d\n", whileRot.peek() + 1); }
+
+          | CONTINUE { System.out.printf("\tJMP rot_%02d\n", whileRot.peek()); }
 
 	  | FACA  statement { System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
                               System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);

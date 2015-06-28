@@ -38,6 +38,7 @@ NUM         = [0-9]+
 "INTEGER"    { return Parser.INTEGER;}
 "BOOLEAN"    { return Parser.BOOLEAN;}
 "BREAK"      { return Parser.BREAK;}
+"CONTINUE"   { return Parser.CONTINUE;}
 "BEGIN"      { return Parser.BEGIN;}
 "END"        { return Parser.END;}
 "IF"         { return Parser.IF;}
