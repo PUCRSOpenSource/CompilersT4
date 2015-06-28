@@ -77,14 +77,14 @@ statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
 
           | CONTINUE { System.out.printf("\tJMP rot_%02d\n", whileRot.peek()); }
 
-	  | FACA  statement { System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
-                              System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
-                              pRot.pop(); } 
-            ENQUANTO { pRot.push(proxRot);  proxRot += 2;
-                       System.out.printf("rot_%02d:\n",pRot.peek()); } 
-	    exp  { System.out.println("\tPOPL %EAX   # desvia se falso...");
-	           System.out.println("\tCMPL $0, %EAX");
-	           System.out.printf("\tJE rot_%02d\n", (int)pRot.peek()+1); } 
+          | FACA { pRot.push(proxRot); whileRot.push(proxRot);  proxRot += 2;
+                   System.out.printf("rot_%02d:\n",pRot.peek()); }
+            statement
+            ENQUANTO
+            exp { System.out.println("\tPOPL %EAX   # desvia se falso...");
+                  System.out.println("\tCMPL $0, %EAX");
+                  System.out.printf("\tJNE rot_%02d\n", (int)pRot.peek());
+                  pRot.pop(); whileRot.pop(); }
 
           | compoundStmt
 
