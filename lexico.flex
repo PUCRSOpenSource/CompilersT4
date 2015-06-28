@@ -32,42 +32,42 @@ NUM         = [0-9]+
 "$TRACE_ON"  { yyparser.setDebug(true);  }
 "$TRACE_OFF" { yyparser.setDebug(false); }
 
-"PROGRAM"   {return Parser.PROGRAM;}
+"PROGRAM"    { return Parser.PROGRAM;}
 
-"VAR"       {return Parser.VAR;}      
-"INTEGER"   {return Parser.INTEGER;}
-"BOOLEAN"   {return Parser.BOOLEAN;}   
-"BREAK"     {return Parser.BREAK;}
-"BEGIN"     {return Parser.BEGIN;}
-"END"       {return Parser.END;}
-"IF"        {return Parser.IF;}
-"THEN"      {return Parser.THEN;}
-"ELSE"      {return Parser.ELSE;}
-"WHILE"     {return Parser.WHILE;}
-"DO"        {return Parser.DO;}
-"FACA"     {return Parser.FACA;}
-"ENQUANTO"     {return Parser.ENQUANTO;}
-"?"				{return Parser.SE;}
-":"				{return Parser.SENAO;}
-"READLN"    {return Parser.READLN;}
-"WRITELN"   {return Parser.WRITELN;}
+"VAR"        { return Parser.VAR;}
+"INTEGER"    { return Parser.INTEGER;}
+"BOOLEAN"    { return Parser.BOOLEAN;}
+"BREAK"      { return Parser.BREAK;}
+"BEGIN"      { return Parser.BEGIN;}
+"END"        { return Parser.END;}
+"IF"         { return Parser.IF;}
+"THEN"       { return Parser.THEN;}
+"ELSE"       { return Parser.ELSE;}
+"WHILE"      { return Parser.WHILE;}
+"DO"         { return Parser.DO;}
+"FACA"       { return Parser.FACA;}
+"ENQUANTO"   { return Parser.ENQUANTO;}
+"?"          { return Parser.SE;}
+":"          { return Parser.SENAO;}
+"READLN"     { return Parser.READLN;}
+"WRITELN"    { return Parser.WRITELN;}
 
 
-":="        {return Parser.ASSIGN;}
-"DIV"       {return Parser.DIV;}
-"MOD"       {return Parser.MOD;}
-"AND"       {return Parser.AND;}
-"OR"        {return Parser.OR;}
-"NOT"       {return Parser.NOT;}
-"<="        {return Parser.LEQ;}
-"<"         {return Parser.LE;}
-">"         {return Parser.GR;}
-">="        {return Parser.GEQ;}
-"="         {return Parser.EQ;}
-"<>"        {return Parser.NEQ;}
+":="         { return Parser.ASSIGN;}
+"DIV"        { return Parser.DIV;}
+"MOD"        { return Parser.MOD;}
+"AND"        { return Parser.AND;}
+"OR"         { return Parser.OR;}
+"NOT"        { return Parser.NOT;}
+"<="         { return Parser.LEQ;}
+"<"          { return Parser.LE;}
+">"          { return Parser.GR;}
+">="         { return Parser.GEQ;}
+"="          { return Parser.EQ;}
+"<>"         { return Parser.NEQ;}
 
-"TRUE"      {return Parser.TRUE;}
-"FALSE"     {return Parser.FALSE;}
+"TRUE"       { return Parser.TRUE;}
+"FALSE"      { return Parser.FALSE;}
 
 ":"|
 ";"|
