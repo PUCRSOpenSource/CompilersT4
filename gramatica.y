@@ -16,7 +16,7 @@
 
 %token  PROGRAM FUNCTION PROCEDURE
 %token VAR INTEGER BOOLEAN REAL 
-%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO SE SENAO BREAK CONTINUE
+%token BEGIN END IF THEN ELSE WHILE DO READLN WRITELN FACA ENQUANTO BREAK CONTINUE
 %token ASSIGN DIV MOD AND OR NOT
 %token TRUE FALSE
 %token LEQ LE GRE GEQ EQ NEQ
@@ -124,15 +124,7 @@ statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
 	                   System.out.println("\tCMPL $0, %EAX");
 	                   System.out.printf("\tJE rot_%02d\n", pRot.peek()); }
 	    statement restoIf { System.out.printf("rot_%02d:\n",pRot.peek()+1);
-	                        pRot.pop(); }
-
-	  |  exp SE { pRot.push(proxRot);  proxRot += 2;
-	              System.out.println("\tPOPL %EAX");
-	              System.out.println("\tCMPL $0, %EAX");
-	              System.out.printf("\tJE rot_%02d\n", pRot.peek()); }
-	    statement restoSe { System.out.printf("rot_%02d:\n",pRot.peek()+1);
-	                        pRot.pop(); }
-							
+	                        pRot.pop(); }	  							
 	  |
           ;
      
@@ -151,13 +143,6 @@ restoIf : ELSE  {
 				} 
 		;	
 		
-restoSe : SENAO  {
-											System.out.printf("\tJMP rot_%02d\n", pRot.peek()+1);
-											System.out.printf("rot_%02d:\n",pRot.peek());
-								
-										} 							
-							statement  
-          ;
 
 printList : LITERAL printList2
           | exp printList2
