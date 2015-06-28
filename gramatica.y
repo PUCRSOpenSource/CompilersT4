@@ -73,6 +73,8 @@ statement : ID ASSIGN exp {  System.out.println("\tPOPL %EDX");
 	                   System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
 	                   pRot.pop(); whileRot.pop(); } 
 
+          | BREAK { System.out.printf("\tJMP rot_%02d\n", whileRot.peek() + 1); }
+
 	  | FACA  statement { System.out.printf("\tJMP rot_%02d   # terminou cmd na linha de cima\n", pRot.peek());
                               System.out.printf("rot_%02d:\n",(int)pRot.peek()+1);
                               pRot.pop(); } 

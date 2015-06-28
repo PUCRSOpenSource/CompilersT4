@@ -5,12 +5,12 @@ var
 begin
         writeln("informe um numero qualquer");
         readln(N);
-        cont :=1;
-        while (cont <= N) do 
+        cont := 0;
+        while (cont < N) do 
         begin 
-                cont := cont + 1;
-                if (cont < 101) then
+                if (cont > 99) then
                         break;
+                cont := cont + 1;
         end;
         writeln("Num informado: ", N);
         writeln("ateh onde o laco foi: ", cont);

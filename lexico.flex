@@ -47,8 +47,8 @@ NUM         = [0-9]+
 "DO"         { return Parser.DO;}
 "FACA"       { return Parser.FACA;}
 "ENQUANTO"   { return Parser.ENQUANTO;}
-"?"          { return Parser.SE;}
-":"          { return Parser.SENAO;}
+
+
 "READLN"     { return Parser.READLN;}
 "WRITELN"    { return Parser.WRITELN;}
 
