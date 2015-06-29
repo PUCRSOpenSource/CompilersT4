@@ -8,10 +8,15 @@ Nomes:
 
 Relatorio:
 
-O trabalho foi feito utilizando Java e acreditamos que todas as especifícações foram implementadas.  A falta de alguma coisa nos passou despercebida mas nos parece estar tudo certo.
+O trabalho foi feito utilizando Java e acreditamos que todas as especifícações
+foram implementadas.  A falta de alguma coisa nos passou despercebida mas nos
+parece estar tudo certo.
 
 Instruções:
 
-1. **Compilar o compilador** - Abra um terminal na raiz do projeto e execute o comando `make`.
-* **Compilar programa em pascal** - Escolha um dos programas .pas disponíveis e execute `./run.x <programa.pas>`.
-* **Executar programa em pascal** - Depois de compilado, execute o mesmo programa.pas com o comando `./<programa>`.
+1. **Compilar o compilador** - Abra um terminal na raiz do projeto e execute o
+   comando `make`.
+2. **Compilar programa em pascal** - Escolha um dos programas .pas disponíveis e
+   execute `./run.x <programa.pas>`.
+3. **Executar programa em pascal** - Depois de compilado, execute o mesmo
+   programa.pas com o comando `./<programa>`.
