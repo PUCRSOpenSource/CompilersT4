@@ -12,6 +12,12 @@ O trabalho foi feito utilizando Java e acreditamos que todas as especifícaçõe
 foram implementadas.  A falta de alguma coisa nos passou despercebida mas nos
 parece estar tudo certo.
 
+Os novos conceitos adicionados foram:
+
+* `break`
+* `continue`
+* `FACA...ENQUANTO`
+
 Instruções:
 
 1. **Compilar o compilador** - Abra um terminal na raiz do projeto e execute o
